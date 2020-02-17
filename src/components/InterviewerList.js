@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "components/InterviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem"
-
-const classNames = require("classnames");
 
 export default function InterviewerList(props) {
 
@@ -14,8 +12,8 @@ export default function InterviewerList(props) {
             key={i.id}
             name={i.name}
             avatar={i.avatar}
-            selected={i.id === props.interviewer}
-            setInterviewer={() => props.setInterviewer(i.id)}
+            selected={i.id === props.value}
+            setInterviewer={() => props.onChange(i.id)}
           />)}
       </ul>
     </section>
