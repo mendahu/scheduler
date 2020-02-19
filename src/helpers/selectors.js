@@ -36,13 +36,9 @@ export function getInterviewersForDay(state, day) {
   } else {
     return []
   }
-
-  console.log(intArray)
-
   const resArray = [];
   intArray.forEach(app => {
     resArray.push(state.interviewers[app]);
   })
-  console.log(resArray)
   return resArray;
 }
