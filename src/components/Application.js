@@ -52,11 +52,14 @@ export default function Application(props) {
 
     
     return axios.put(`./api/appointments/${id}`, appointment)
-    .then(() => {
+      .then((res) => {
+        console.log("blah blah then")
         setState({...state, appointments});
       })
       .catch((err) => {
-        console.log(err);
+        console.log("blah blah catch")
+        console.error(err);
+        throw err
       });
   }
 
@@ -72,12 +75,16 @@ export default function Application(props) {
       [id]: appointment
     };
 
+
     return axios.delete(`./api/appointments/${id}`, appointment)
-    .then(() => {
+      .then(() => {
+        console.log("flar flar then")
         setState({...state, appointments});
       })
       .catch((err) => {
-        console.log(err);
+        console.log("flar flar catch")
+        console.error(err);
+        throw err;
       });
   }
 
