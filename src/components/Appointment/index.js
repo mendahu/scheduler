@@ -4,6 +4,7 @@ import Show from "./Show"
 import Empty from "./Empty"
 import Form from "./Form"
 import Status from "./Status"
+import Confirm from "./Confirm"
 import useVisualMode from "../../hooks/useVisualMode"
 import "./styles.scss";
 
@@ -11,6 +12,9 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
 
@@ -28,14 +32,29 @@ export default function Appointment(props) {
       interviewer
     };
 
-    console.log("on save", interview)
-
     transition(SAVING);
     props.bookInterview(props.id, interview)
       .then(() => {
         transition(SHOW);
       })
+  }
 
+  const edit = () => {
+    transition(EDIT)
+  }
+
+  const confirm = () => {
+    transition(CONFIRM)
+  }
+
+  const deleteApp = () => {
+
+    transition(DELETING)
+
+    props.cancelInterview(props.id)
+      .then(() => {
+        transition(EMPTY)
+      })
   }
 
   return (
@@ -44,7 +63,7 @@ export default function Appointment(props) {
 
       {mode === EMPTY && <Empty onAdd={onAdd} />}
       {mode === SHOW && (
-        <Show student={props.interview.student} interview={props.interview}/>
+        <Show student={props.interview.student} interview={props.interview} onEdit={edit} onDelete={confirm}/>
       )}
       {mode === CREATE && (
         <Form 
@@ -55,6 +74,21 @@ export default function Appointment(props) {
       )}
       {mode === SAVING && (
         <Status message="Saving..."/>
+      )}
+      {mode === DELETING && (
+        <Status message="Deleting..."/>
+      )}
+      {mode === CONFIRM && (
+        <Confirm message="Are you sure you want to delete?" onConfirm={deleteApp} onCancel={back}/>
+      )}
+      {mode === EDIT && (
+        <Form 
+        onSave={save} 
+        interviewers={props.interviewers} 
+        onCancel={back}
+        name={props.interview.student}
+        interviewer={props.interview.interviewer.id}
+      />
       )}
 
     </article>
