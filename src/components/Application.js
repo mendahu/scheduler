@@ -12,11 +12,12 @@ import "components/Application.scss";
 
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
-  
+
   const interviewers = getInterviewersForDay(state, state.day)
 
   const appointments = getAppointmentsForDay(state, state.day).map((app) => {
     const interview = getInterview(state, app.interview);
+
     return (<Appointment
       key={app.id}
       id={app.id}
