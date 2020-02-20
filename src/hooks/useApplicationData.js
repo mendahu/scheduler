@@ -17,18 +17,11 @@ const reducer = function(state, {type, value}) {
         interviewers: value[2].data
       }
     case SET_INTERVIEW:
-      return {...state, appointments: value}
+      return {...state, appointments: value.appointments, days: value.days}
     default:
       throw new Error(`Tried to reduce with unsupported action type: ${type}`);
   }
 }
-
-// useState({
-//   day: "Monday", 
-//   days: [], 
-//   appointments: {},
-//   interviewers: null
-// })
 
 export default function useApplicationData() {
 
@@ -55,6 +48,35 @@ export default function useApplicationData() {
       });
   }, [])
 
+  const getDayIndexbByAppId = function(id) {
+    const days = [...state.days];
+
+    for (const day of days) {
+      if (day.appointments.find(element => element === id)) return day.id - 1
+    }
+    return undefined
+  }
+
+  const updateSpots = function(appId, appointments) {
+
+    const dayNum = getDayIndexbByAppId(appId);
+    if (dayNum === undefined) return {...state.days}
+
+    const daysToCheck = state.days[dayNum].appointments;
+
+    let newSpots = 0;
+    daysToCheck.forEach((el, index) => {
+      if (appointments[el].interview === null) newSpots++
+    })
+
+    const day = {
+      ...state.days[dayNum],
+      spots: newSpots
+    }
+
+    return state.days.map((item, index) => (index !== dayNum) ? item : {...item, ...day})
+  }
+
   const bookInterview = function(id, interview) {
       
     const appointment = {
@@ -67,10 +89,11 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const days = updateSpots(id, appointments);
+
     return axios.put(`./api/appointments/${id}`, appointment)
       .then((res) => {
-        console.log(appointments)
-        dispatch({ type: SET_INTERVIEW, value: appointments})
+        dispatch({ type: SET_INTERVIEW, value: {appointments, days}});
       })
       .catch((err) => {
         console.error(err);
@@ -90,11 +113,11 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const days = updateSpots(id, appointments);
 
     return axios.delete(`./api/appointments/${id}`, appointment)
       .then(() => {
-        console.log(appointments)
-        dispatch({ type: SET_INTERVIEW, value: appointments})
+        dispatch({ type: SET_INTERVIEW, value: {appointments, days}})
       })
       .catch((err) => {
         console.error(err);
