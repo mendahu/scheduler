@@ -32,7 +32,7 @@ export default function useApplicationData() {
     interviewers: null
   });
 
-  const setDay = day => dispatch({ type: SET_DAY, day });
+  const setDay = day => dispatch({ type: SET_DAY, value: day });
 
   useEffect(() => {
     const daysProm = axios.get("./api/days");
