@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import InterviewerList from "../InterviewerList"
-import Button from "../Button"
+import InterviewerList from "../InterviewerList";
+import Button from "../Button";
 
 export default function Form(props) {
-  const [ name, setName ] = useState(props.name || "")
-  const [ interviewer, setInterviewer] = useState(props.interviewer || null)
+  const [ name, setName ] = useState(props.name || "");
+  const [ interviewer, setInterviewer] = useState(props.interviewer || null);
 
   const reset = () => {
     setName("");
     setInterviewer(null);
-  }
+  };
 
   const cancel = () => {
     reset();
-    props.onCancel()
-  }
+    props.onCancel();
+  };
 
   const saveApp = function() {
-    props.onSave(name, interviewer)
-  }
+    props.onSave(name, interviewer);
+  };
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -42,5 +42,5 @@ export default function Form(props) {
         </section>
       </section>
     </main>
-  )
+  );
 }

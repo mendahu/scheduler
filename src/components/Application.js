@@ -1,19 +1,19 @@
 import React from "react";
-import DayList from "./DayList"
-import useApplicationData from "../hooks/useApplicationData"
-import Appointment from "./Appointment/index"
-import { 
-  getAppointmentsForDay, 
-  getInterviewersForDay, 
-  getInterview 
-} from "../helpers/selectors"
+import DayList from "./DayList";
+import useApplicationData from "../hooks/useApplicationData";
+import Appointment from "./Appointment/index";
+import {
+  getAppointmentsForDay,
+  getInterviewersForDay,
+  getInterview
+} from "../helpers/selectors";
 
 import "components/Application.scss";
 
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
 
-  const interviewers = getInterviewersForDay(state, state.day)
+  const interviewers = getInterviewersForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day).map((app) => {
     const interview = getInterview(state, app.interview);
@@ -26,7 +26,7 @@ export default function Application(props) {
       interview={interview}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
-    />)
+    />);
   });
 
   return (
@@ -39,11 +39,11 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList 
+          <DayList
             days={state.days}
             day={state.day}
             setDay={setDay}
-            />
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -54,7 +54,7 @@ export default function Application(props) {
       <section className="schedule">
         {appointments}
         <Appointment key="last" time="6pm" />
-      </section>      
+      </section>
     </main>
   );
 }
