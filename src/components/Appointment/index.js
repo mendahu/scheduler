@@ -67,7 +67,7 @@ export default function Appointment(props) {
   };
 
   return (
-    <article className="appointment" key={props.id}>
+    <article className="appointment" key={props.id} data-testid="appointment">
       <Header time={props.time} />
 
       {mode === EMPTY && <Empty onAdd={onAdd} />}
