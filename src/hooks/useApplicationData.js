@@ -1,12 +1,6 @@
 import { useReducer, useEffect } from "react";
 import axios from "axios";
 
-const axiosConfig = {
-  baseURL: "http://localhost:8001"
-};
-
-const axiosFetch = axios.create(axiosConfig);
-
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
@@ -41,9 +35,9 @@ export default function useApplicationData() {
   const setDay = day => dispatch({ type: SET_DAY, value: day });
 
   useEffect(() => {
-    const daysProm = axiosFetch.get("api/days");
-    const appsProm = axiosFetch.get("api/appointments");
-    const intsProm = axiosFetch.get("api/interviewers");
+    const daysProm = axios.get("/api/days");
+    const appsProm = axios.get("/api/appointments");
+    const intsProm = axios.get("/api/interviewers");
 
     Promise.all([daysProm, appsProm, intsProm])
       .then((appData) => {
