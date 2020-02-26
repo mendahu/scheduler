@@ -5,8 +5,8 @@ const SET_INTERVIEW = "SET_INTERVIEW";
 
 const reducer = function(state, {type, value}) {
   switch (type) {
-  //case SET_DAY:
-  //return {...state, day: value};
+  case SET_DAY:
+    return {...state, day: value};
   case SET_APPLICATION_DATA:
     return {
       ...state,
