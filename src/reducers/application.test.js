@@ -1,5 +1,4 @@
-import { reducer } from "./application";
-import { exportAllDeclaration } from "@babel/types";
+import reducer from "./application";
 
 describe("Reducer", () => {
 
