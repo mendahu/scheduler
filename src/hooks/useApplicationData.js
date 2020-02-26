@@ -13,6 +13,7 @@ export default function useApplicationData() {
 
   const setDay = day => dispatch({ type: SET_DAY, value: day });
 
+  //All API calls for initial state here
   useEffect(() => {
     const daysProm = axios.get("/api/days");
     const appsProm = axios.get("/api/appointments");
@@ -27,6 +28,8 @@ export default function useApplicationData() {
       });
   }, []);
 
+  //fetches an index number of a day in a week given an appointment ID
+  //ie day 0 is Monday
   const getDayIndexbByAppId = function(id) {
     const days = [...state.days];
 
@@ -36,6 +39,7 @@ export default function useApplicationData() {
     return undefined;
   };
 
+  //Updates the spots remaining in state after a change to an appointment
   const updateSpots = function(appId, appointments) {
 
     const dayNum = getDayIndexbByAppId(appId);
@@ -56,6 +60,7 @@ export default function useApplicationData() {
     return state.days.map((item, index) => (index !== dayNum) ? item : {...item, ...day});
   };
 
+  //books a new interview in state and db
   const bookInterview = function(id, interview) {
       
     const appointment = {
@@ -80,6 +85,7 @@ export default function useApplicationData() {
       });
   };
 
+  //cancels an interview in state and db
   const cancelInterview = (id) => {
 
     const appointment = {

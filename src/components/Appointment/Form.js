@@ -7,16 +7,20 @@ export default function Form(props) {
   const [ error, setError ] = useState("");
   const [ interviewer, setInterviewer] = useState(props.interviewer || null);
 
+  //Clears form
   const reset = () => {
     setName("");
     setInterviewer(null);
   };
 
+  //Cancels
   const cancel = () => {
     reset();
     props.onCancel();
   };
 
+  //Checks for a blank student name or interviewer
+  //Kicks off save if all is ok
   const validate = function() {
     
     if (name === "") {

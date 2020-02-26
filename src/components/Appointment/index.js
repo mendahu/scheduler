@@ -25,10 +25,12 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  //transitions to create form
   const onAdd = () => {
     transition(CREATE);
   };
 
+  //transitions to Show or Error states depending on whether db save is successful
   const save = (name, interviewer) => {
     const interview = {
       student: name,
@@ -45,14 +47,17 @@ export default function Appointment(props) {
       });
   };
 
+  //Transitions to edit visual state
   const edit = () => {
     transition(EDIT);
   };
 
+  //transitions to confirm
   const confirm = () => {
     transition(CONFIRM);
   };
 
+  //transitons to empty or error depending on if delete action is success
   const deleteApp = () => {
 
     transition(DELETING, true);
